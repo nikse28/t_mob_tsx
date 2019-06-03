@@ -2,83 +2,36 @@ import React, { Component } from 'react'
 import { Select ,Button ,Input  } from "antd";
 import TableRules from './TableRules';
 import dataJson from "../data/data";
+import '../index.css'
 
 const { TextArea } = Input;
 export default class ReconRules extends Component {
     
     state= {
         addRuleTable:[
-            {"id":1,"name":"asd"}
-        ]  
+          {"id":1,"name":"John"}
+        ],
+        sources : dataJson.sourceData,
+        records : dataJson.recordData,
+        entity :  dataJson.entityData,
     }
-    
-    public sourceData = [
-         {
-           "sourceId": 1,
-           "sourceName": "Source 1"
-         },
-         {
-           "sourceId": 2,
-           "sourceName": "Source 2"
-         }
-         
-       ];
-    public recordData = [
-        {
-          sourceId: 1,
-          recordId: 1,
-          recordName: "Record 1"
-        },
-        {
-          sourceId: 1,
-          recordId: 2,
-          recordName: "Record 2"
-        },
-        {
-          sourceId: 2,
-          recordId: 3,
-          recordName: "Record 3"
-        },
-        {
-          sourceId: 3,
-          recordId: 4,
-          recordName: "Record 4"
-        }
-      ];
-    public entityData = [
-        {
-          recordId:1,
-          entityId:1,
-          entityData:"Entity 1"
-        },
-        {
-          recordId:1,
-          entityId:2,
-          entityData:"Entity 2"
-        },
-        {
-          recordId:2,
-          entityId:3,
-          entityData:"Entity 3"
-        }
-    ];
       filterRecord :any= [];
       filterEntityData :any = [];  
       
     handleSourceChange=(e:any)=> {
         // console.log('Source  ',e.target.value);
         this.filterRecord = [];
-        this.recordData.filter(data => {
+        this.state.records.filter(data => {
         if (e === data.sourceId) {
             this.filterRecord.push(data);
-        }
+          }
         });
-        this.setState({});
+        this.setState({  });
     }
     handleRecordChange=(e:any)=> {
         console.log('ERTO',e);
         this.filterEntityData = [];
-        this.entityData.filter((data:any) => {
+        this.state.entity.filter((data:any) => {
           if (e === data.recordId) {
             console.log('Entity data...',data);
             this.filterEntityData.push(data);
@@ -105,15 +58,15 @@ export default class ReconRules extends Component {
         return (
             <div>
                 Source
-                <Select  id="" onChange={this.handleSourceChange} style={{width:120}}>
-                { this.sourceData.map (res=>{
+                <Select  id="1" onChange={this.handleSourceChange} className="rec-select-box">
+                { this.state.sources.map (res=>{
                     return(                      
                         <Option value={res.sourceId} key={res.sourceId}>{res.sourceName}</Option>
                     )
                 })}
                 </Select>
                 rules
-                <Select id="" onChange={this.handleRecordChange} style={{width:120}}>
+                <Select id="2" onChange={this.handleRecordChange} className="rec-select-box">
                     {
                         this.filterRecord.map((res:any)=>{
                             return(
@@ -127,17 +80,16 @@ export default class ReconRules extends Component {
                <div>
                  Notes:
                  </div> 
-                <TextArea rows={4} style={{width:220}}/> <br/><br/>
+                <TextArea rows={4} className="rec-text-area"/> <br/><br/>
                 <Button type="ghost" onClick={this.handleAddRules}>Add Rule</Button>  <Button onClick={this.handleRemoveRule}>Remove Rule</Button><br/><br/>
                 {
                     this.state.addRuleTable.map(res=>{
                         return(
                             <div key={Math.random()}>
-                                <TableRules />
+                                <TableRules/>
                                 <br/>
                             </div>
                         )
-
                     })
                 }
             </div>

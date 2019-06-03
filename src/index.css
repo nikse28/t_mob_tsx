@@ -11,6 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-.select-box {
-  width:120px;
+/* Recon style sheet  */
+.rec-select-box {
+  width:10%;
+}
+.rec-text-area {
+  width: 25% !important;
+}
+.rec-icon-font {
+  font-size: 16px;
+  color: #000;
 }

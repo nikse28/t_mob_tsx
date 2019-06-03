@@ -1,5 +1,5 @@
-const dataJson = [
-  sourceData = [
+const dataJson = {
+  sourceData : [
     {
       sourceId: 1,
       sourceName: "Source 1"
@@ -9,7 +9,7 @@ const dataJson = [
       sourceName: "Source 2"
     }
   ],
-  recordData = [
+  recordData : [
     {
       sourceId: 1,
       recordId: 1,
@@ -31,7 +31,7 @@ const dataJson = [
       recordName: "Record 4"
     }
   ],
-  entityData = [
+  entityData : [
     {
       recordId:1,
       entityId:1,
@@ -48,6 +48,6 @@ const dataJson = [
       entityData:"Entity 3"
     }
   ]
-];
+};
 
 export default dataJson;

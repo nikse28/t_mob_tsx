@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Select, Table ,Button ,Icon ,Tooltip , message , Input } from "antd";
+import '../index.css'
 const { Option } = Select;
 export default class TableRules extends Component {
 
@@ -58,9 +59,9 @@ export default class TableRules extends Component {
       render:(text:any,record:any)=>{
           return(
               <div>
-                 <Tooltip title="Save"> <Icon style={{fontSize:18,color:"black"}} type="save" onClick={()=>this.handleSaveRow(record)}/> </Tooltip>|
-                 <Tooltip title="Delete"> <Icon style={{fontSize:18,color:"black"}} type="delete" onClick={()=>{this.handleDeleteRow(record)}}/> </Tooltip> |
-                 <Tooltip title="Edit"> <Icon style={{fontSize:18,color:"black"}} type="edit" onClick={()=>{this.handleEditRow(record)}}/>  </Tooltip>
+                 <Tooltip title="Save"> <Icon className="rec-icon-font" type="save" onClick={()=>this.handleSaveRow(record)}/> </Tooltip>|
+                 <Tooltip title="Delete"> <Icon className="rec-icon-font" type="delete" onClick={()=>{this.handleDeleteRow(record)}}/> </Tooltip> |
+                 <Tooltip title="Edit"> <Icon className="rec-icon-font" type="edit" onClick={()=>{this.handleEditRow(record)}}/>  </Tooltip>
              </div>
           )
       }
@@ -69,9 +70,6 @@ export default class TableRules extends Component {
   
   handleEditRow=(rowData:any)=>{
     console.log('Clicked',rowData);
-    if(rowData.key==1) {
-      return <Input/>
-    }
   }
   
   handleAddRow=()=>{
