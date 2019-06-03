@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Select, Table ,Button ,Icon ,Tooltip , message ,} from "antd";
+import { Select, Table ,Button ,Icon ,Tooltip , message , Input } from "antd";
 
+const { Option } = Select;
 export default class TableRules extends Component {
 
     state={
@@ -10,6 +11,13 @@ export default class TableRules extends Component {
               name: "John doe",
               age: 22,
               address: "NKASDmlk kGSAD",
+              operation: "Edit delete"
+            },
+            {
+              key: 2,
+              name: "Kiza Charli",
+              age: 33,
+              address: "Loria kGSAD",
               operation: "Edit delete"
             }
           ]
@@ -22,27 +30,27 @@ export default class TableRules extends Component {
   
   columns = [
     {
-      title: "Name",
+      title: "Parameter",
       dataIndex: "name",
       key: "name",
       render:()=>{
           return(
               <div>
-                  <select name="" id="">
-                      <option value="as">Lorem</option>
-                      <option value="as">Torem</option>
-                  </select>
+                  <Select style={{width:120}}>
+                    <Option key={1}>Param 1</Option>
+                    <Option key={2}>Param 2</Option>
+                  </Select>
               </div>
           )
       }  
     },
     {
-      title: "Age",
+      title: "Operator",
       dataIndex: "age",
       key: "age"
     },
     {
-      title: "Address",
+      title: "Value",
       dataIndex: "address",
       key: "address"
     },
@@ -53,15 +61,21 @@ export default class TableRules extends Component {
       render:(text:any,record:any)=>{
           return(
               <div>
-                 <Tooltip title="Save"> <Icon style={{fontSize:18,color:"black"}} type="save" onClick={()=>this.handleSaveRow(record,text)}/> </Tooltip>|
+                 <Tooltip title="Save"> <Icon style={{fontSize:18,color:"black"}} type="save" onClick={()=>this.handleSaveRow(record)}/> </Tooltip>|
                  <Tooltip title="Delete"> <Icon style={{fontSize:18,color:"black"}} type="delete" onClick={()=>{this.handleDeleteRow(record)}}/> </Tooltip> |
-                 <Tooltip title="Edit"> <Icon style={{fontSize:18,color:"black"}} type="edit" onClick={()=>{this.handleDeleteRow(record)}}/>  </Tooltip>
+                 <Tooltip title="Edit"> <Icon style={{fontSize:18,color:"black"}} type="edit" onClick={()=>{this.handleEditRow(record)}}/>  </Tooltip>
              </div>
           )
       }
     }
   ];
   
+  handleEditRow=(rowData:any)=>{
+    console.log('Clicked',rowData);
+    if(rowData.key==1) {
+      return <Input/>
+    }
+  }
   
   handleAddRow=()=>{
     const newValue = {
@@ -81,9 +95,8 @@ export default class TableRules extends Component {
     )
       
   }
-  handleSaveRow=(record:any,text:any)=>{
+  handleSaveRow=(record:any)=>{
     console.log('Loggin',record);
-    console.log('text',text);
     message.success('Data Save Successfully ');
   }
 

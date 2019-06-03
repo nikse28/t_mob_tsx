@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
-import { Select ,Button } from "antd";
+import { Select ,Button ,Input  } from "antd";
 import TableRules from './TableRules';
-// import { sourceData } from "../data/data";
+import dataJson from "../data/data";
 
+const { TextArea } = Input;
 export default class ReconRules extends Component {
     
     state= {
         addRuleTable:[
             {"id":1,"name":"asd"}
-        ]
+        ]  
     }
     
     public sourceData = [
@@ -22,7 +23,7 @@ export default class ReconRules extends Component {
          }
          
        ];
-        public recordData = [
+    public recordData = [
         {
           sourceId: 1,
           recordId: 1,
@@ -44,7 +45,7 @@ export default class ReconRules extends Component {
           recordName: "Record 4"
         }
       ];
-      entityData = [
+    public entityData = [
         {
           recordId:1,
           entityId:1,
@@ -73,7 +74,6 @@ export default class ReconRules extends Component {
         }
         });
         this.setState({});
-        
     }
     handleRecordChange=(e:any)=> {
         console.log('ERTO',e);
@@ -122,14 +122,19 @@ export default class ReconRules extends Component {
                         })
                     }
                 </Select>
-                <br/><br/>
-                <Button type="ghost" onClick={this.handleAddRules}>Add Rule</Button>  <Button onClick={this.handleRemoveRule}>Remove Rule</Button><br/><br/>
 
+                <br/><br/>
+               <div>
+                 Notes:
+                 </div> 
+                <TextArea rows={4} style={{width:220}}/> <br/><br/>
+                <Button type="ghost" onClick={this.handleAddRules}>Add Rule</Button>  <Button onClick={this.handleRemoveRule}>Remove Rule</Button><br/><br/>
                 {
                     this.state.addRuleTable.map(res=>{
                         return(
                             <div key={Math.random()}>
                                 <TableRules />
+                                <br/>
                             </div>
                         )
 
