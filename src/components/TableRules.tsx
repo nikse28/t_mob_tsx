@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Select, Table ,Button ,Icon ,Tooltip , message , Input } from "antd";
-
 const { Option } = Select;
 export default class TableRules extends Component {
 
     state={
+        isWritable: false,
+
         data : [
             {
               key: 1,
@@ -23,10 +24,6 @@ export default class TableRules extends Component {
           ]
     }
    
-  constructor(props: any) {
-    super(props);
-    console.log("fff", props);   
-  }
   
   columns = [
     {
@@ -85,7 +82,6 @@ export default class TableRules extends Component {
       address: "Gankolr record filt",
       operation: "Edit Delete"
     }
-
       this.setState({
         data:[
           ...this.state.data,
