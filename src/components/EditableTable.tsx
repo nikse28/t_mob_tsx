@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
+import { Table, Input, InputNumber,Icon, Popconfirm, Form, Select } from 'antd';
 import EditableCell from "./EditableCell";
 const EditableContext = React.createContext('default');
+const { Option }=Select;
 
 interface ItableData {
     key:number,
@@ -16,12 +17,12 @@ interface IcolumnKeys {
     width?: string,
     editable?: boolean,
 }
-class EditableTable extends React.Component {
-    
+
+class EditableTable extends React.Component <any,any> {
     constructor(props:any) {
         super(props);
         this.state = { 
-            data <tableData> :[
+            data :[
                 {
                     key: 1,
                     name: `Edrward `,
@@ -34,25 +35,45 @@ class EditableTable extends React.Component {
                     age: 33,
                     address: `locaso Park no. `,
                   }
-            ]
-            , editingKey: '' 
-        };
-
-        this.columns = [
+              ], 
+            editingKey: '', 
+          columns : [
           {
-            title: 'name',
+            title: 'Parameter',
             dataIndex: 'name',
             width: '25%',
-            editable: true,
+            render:()=>{
+              return (
+                <Select style={{width:120}}>
+                  <Option key={1}>
+                    Param 1
+                  </Option>
+                  <Option key={2}>
+                    Param 2
+                  </Option>
+                </Select>
+              )
+            },
           },
           {
-            title: 'age',
+            title: 'Operator',
             dataIndex: 'age',
             width: '15%',
-            editable: true,
+            render:()=>{
+              return (
+                <Select style={{width:120}}>
+                  <Option key={1}>
+                    Operator 1
+                  </Option>
+                  <Option key={2}>
+                    Operator 2
+                  </Option>
+                </Select>
+              )
+            }
           },
           {
-            title: 'address',
+            title: 'Value',
             dataIndex: 'address',
             width: '40%',
             editable: true,
@@ -60,10 +81,11 @@ class EditableTable extends React.Component {
           {
             title: 'operation',
             dataIndex: 'operation',
-            render: (text, record) => {
-              const { editingKey } = this.state;
+            render: (text:any, record:any) => {
+              const { editingKey }:any = this.state;
               const editable = this.isEditing(record);
-              return editable ? (
+              
+              return  editable ? (
                 <span>
                   <EditableContext.Consumer>
                     {form => (
@@ -81,24 +103,27 @@ class EditableTable extends React.Component {
                   </Popconfirm>
                 </span>
               ) : (
-                <a  onClick={() => this.edit(record.key)}>
-                  Edit
-                </a>
-              );
+                <a onClick={() => this.edit(record.key)}>
+                  <Icon type="edit"/>
+                </a>  
+              )   
+               
             },
           },
-        ];
+        ]
+      };
       } 
       //constructor end
 
-      isEditing = record => record.key === this.state.editingKey;
+      isEditing = (record:any) => record.key === this.state.editingKey;
 
   cancel = (record:any) => {
     this.setState({ editingKey: '' });
   };
 
-  save(form, key) {
-    form.validateFields((error, row) => {
+  save(form:any, key:any) {
+    console.log("form data",form, key);
+    form.validateFields((error:any, row:any) => {
       if (error) {
         return;
       }
@@ -118,7 +143,8 @@ class EditableTable extends React.Component {
     });
   }
 
-  edit(key) {
+  
+  edit(key:any) {
     this.setState({ editingKey: key });
   }
 
@@ -129,13 +155,13 @@ class EditableTable extends React.Component {
       },
     };
 
-    const columns = this.columns.map(col => {
+    const columns = this.state.columns.map((col:any) => {
       if (!col.editable) {
         return col;
       }
       return {
         ...col,
-        onCell: record => ({
+        onCell: (record:any) => ({
           record,
           inputType: col.dataIndex === 'age' ? 'number' : 'text',
           dataIndex: col.dataIndex,

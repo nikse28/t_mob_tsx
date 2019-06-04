@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Table, Input, InputNumber, Popconfirm, Form } from 'antd';
+import { Table, Input, InputNumber, Popconfirm, Form, Button } from 'antd';
 import EditableFormTable from "./EditableTable"
 
 
-const EditableContext = React.createContext();
+const EditableContext = React.createContext('default');
 class EditableCell extends React.Component <any,any> {
 
     getInput = () => {
@@ -12,9 +12,8 @@ class EditableCell extends React.Component <any,any> {
         }
         return <Input />;
       };
-
-     
-  renderCell = ({ getFieldDecorator }) => {
+  renderCell = () => {
+    console.log('data index',this.props.title);
     const {
       editing,
       dataIndex,
@@ -25,9 +24,12 @@ class EditableCell extends React.Component <any,any> {
       children,
       ...restProps
     } = this.props;
-    return (
+    const { getFieldDecorator } = this.props.form;
+    console.log();
+    return (      
       <td {...restProps}>
-        {editing ? (
+        
+        {editing ? (  
           <Form.Item style={{ margin: 0 }}>
             {getFieldDecorator(dataIndex, {
               rules: [
@@ -37,7 +39,8 @@ class EditableCell extends React.Component <any,any> {
                 },
               ],
               initialValue: record[dataIndex],
-            })(this.getInput())}
+            })(this.getInput())
+            }
           </Form.Item>
         ) : (
           children
@@ -45,11 +48,12 @@ class EditableCell extends React.Component <any,any> {
       </td>
     );
   }; 
-
-
     render() {
         return <EditableContext.Consumer>{this.renderCell}</EditableContext.Consumer>;
-      }
+    }
 }
 
-export default EditableCell;
+const EditableCellTable = Form.create()(EditableCell);
+export default EditableCellTable;
+
+// export default EditableCell;

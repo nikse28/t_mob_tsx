@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Select, Button, Input } from "antd";
 import TableRules from "./TableRules";
 import dataJson from "../data/data";
+import EditableFormTable from './EditableTable';
 import "../index.css";
 
 const { TextArea } = Input;
@@ -94,7 +95,8 @@ export default class ReconRules extends Component {
         {this.state.addRuleTable.map(res => {
           return (
             <div key={Math.random()}>
-              <TableRules />
+              {/* <TableRules /> */}
+              <EditableFormTable/>
               <br />
             </div>
           );
