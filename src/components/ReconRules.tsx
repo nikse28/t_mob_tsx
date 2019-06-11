@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Select, Button, Input } from "antd";
-import TableRules from "./TableRules";
 import dataJson from "../data/data";
-import EditableFormTable from './EditableTable';
+import CRUDTable from './CRUDTable';
+import MappingRuleTableComponent from './MappingRuleTableComponent';
 import "../index.css";
 
 const { TextArea } = Input;
@@ -96,7 +96,9 @@ export default class ReconRules extends Component {
           return (
             <div key={Math.random()}>
               {/* <TableRules /> */}
-              <EditableFormTable/>
+              {/* <EditableFormTable/> */}
+              {/* <CRUDTable/> */}
+              <MappingRuleTableComponent/>
               <br />
             </div>
           );

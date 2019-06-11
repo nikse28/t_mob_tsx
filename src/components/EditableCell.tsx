@@ -25,7 +25,7 @@ class EditableCell extends React.Component <any,any> {
       ...restProps
     } = this.props;
     const { getFieldDecorator } = this.props.form;
-    console.log();
+    console.log('children...',children);
     return (      
       <td {...restProps}>
         
