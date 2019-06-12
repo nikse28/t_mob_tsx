@@ -121,8 +121,8 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
       render: (records: any, index: any) => {
         return (
           <div>
-           { !this.state.cancelButton ? <Tooltip title="edit"> <Icon  type="edit" onClick={() => this.onEdit(index)} style={{marginRight:10}}> Edit </Icon> </Tooltip> : <Tooltip title="close"> <Icon type="close" style={{marginRight:10}} onClick={this.textMode }>Cancel</Icon></Tooltip> } 
-           { this.state.deleteButton ? <Tooltip title="delete"> <Icon type="delete" > Delete </Icon> </Tooltip>: <Tooltip title="save"> <Icon type="save" onClick={() => this.textMode()}>Save</Icon> </Tooltip>}
+           { !this.state.cancelButton ?  <Icon  type="edit" onClick={() => this.onEdit(index)} style={{marginRight:10}}> Edit </Icon>  :  <Icon type="close" style={{marginRight:10}} onClick={this.textMode }>Cancel</Icon> } 
+           { this.state.deleteButton ?  <Icon type="delete" > Delete </Icon>:  <Icon type="save" onClick={() => this.textMode()}>Save</Icon> }
           </div>
         );
       } 
@@ -209,12 +209,6 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
       deleteButton:true
     });
   }
-
-  // handleOnChange(e: any) {
-  //   this.setState({
-  //     text: e.target.value
-  //   });
-  // }
 
   render() {
     return (

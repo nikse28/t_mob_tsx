@@ -1,23 +1,11 @@
 import React, { Component } from "react";
 import { Select } from "antd";
-import CRUDTable from './CRUDTable';
+// import CRUDTable from './CRUDTable';
+import MappingRuleTableComponent from "./MappingRuleTableComponent";
+import SourceServices from '../service/SourceService'; 
+import sourceData from "../data/DataSource";
 
-/* Services/SourceService */
-class SourceService {
-    getRecordTypes(source: string): Array<string> {
-        if (source === 'Source1') {
-            return [
-                "Record1", "Record2", "Record3"
-            ]
-        } else {
-            return [
-                "Record4", "Record5"
-            ]
-        }
-    }
-}
-
-const sourceService = new SourceService();
+const sourceService = new SourceServices();
 // export default sourceService;
 
 /* Features/common/SourceSelector.tsx */
@@ -27,10 +15,17 @@ type SourceSelectorProps = {
 }
 
 class SourceSelector extends Component<SourceSelectorProps> {
+    
+    constructor(props:any) {
+        super(props);
+        console.log('Constructor',sourceData);
+          
+    }
+    
     render() {
-        const { sources, onChange } = this.props;
 
-        return (<Select onChange={onChange}>
+        const { sources, onChange } = this.props;
+        return (<Select  onChange={onChange} style={{width:100}}>
             {sources.map(source => {
                 return (
                     <Select.Option value={source} key={source}>
@@ -68,6 +63,8 @@ class RecordTypeSelector extends Component<RecordTypeSelectorProps, RecordTypeSe
 
     componentDidMount() {
         this.updateRecordTypes();
+        console.log('life',sourceData);
+        
     }
 
     componentDidUpdate(prevProps: RecordTypeSelectorProps, prevState: RecordTypeSelectorState) {
@@ -94,7 +91,7 @@ class RecordTypeSelector extends Component<RecordTypeSelectorProps, RecordTypeSe
     render() {
         const { recordTypes, selectedRecordType } = this.state;
 
-        return (<Select value={selectedRecordType} onChange={this.handleChange}>
+        return (<Select value={selectedRecordType} onChange={this.handleChange} style={{width:100}}>
             {recordTypes.map(recordType => {
                 return (
                     <Select.Option value={recordType} key={recordType}>
@@ -137,17 +134,19 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
 
     render() {
         const { source } = this.state;
-
+        console.log('sTate',this.state);
+        console.log('source',source);
+        
+        
         return <div>
-            Source data filter
             <br />
             Source : <SourceSelector sources={["Source1", "Source2"]} onChange={this.handleSourceChange} />
             <br />
-            Record type : <RecordTypeSelector source={source} />
+            Record type : <RecordTypeSelector source={source}/>
             <br />
             Rule 1: 
             <br />
-            <CRUDTable />
+            <MappingRuleTableComponent />
         </div>
     }
 
