@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Select ,Row, Col } from "antd";
+import { Select ,Row, Col, Button } from "antd";
 import MappingRuleTableComponent from "./MappingRuleTableComponent";
 import SourceServices from '../service/SourceService'; 
 import sourceData from "../data/DataSource";
@@ -110,16 +110,23 @@ type SourceDataFilterState = {
 }
 
 class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilterState> {
+    mapTables:Array<object> = [{"id":1,"parameter":"log"}];
     constructor(props: SourceDataFilterProps) {
         super(props);
 
         this.handleSourceChange = this.handleSourceChange.bind(this);
-
+        this.handleAddRule = this.handleAddRule.bind(this);
         this.state = {
             source: ''
         }
     }
+    handleAddRule(e:any) {
+        console.log("logged");
+       this.mapTables.push({"id":2,"parameter":"log"}); 
+       this.setState({ 
 
+         });
+    }
     handleSourceChange(source: string) {
         this.setState({ source })
     }
@@ -127,6 +134,7 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
     render() {
         const { source } = this.state;
         let sourceList = sourceService.getAllSourceData();
+        
         return <div>
             <br />
             <Row>
@@ -139,8 +147,22 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
             </Row>
             <br /> 
             <br />
+
+            <Button onClick={this.handleAddRule}>
+                Add Rule
+            </Button> 
+            <br/> 
             Mapping Rule Table
-            <MappingRuleTableComponent />
+            <br/>
+            { this.mapTables.map((mapTable,i)=>{
+                console.log('Map table',mapTable);
+                return(
+                    <div key={i}>
+                        <MappingRuleTableComponent /> 
+                        <br/>    
+                    </div>
+                )
+            })}
         </div>
     }
 
