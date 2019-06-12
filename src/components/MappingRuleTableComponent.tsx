@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Icon, Select,Tooltip  } from "antd";
+import { Table, Icon,  } from "antd";
 
 type MappingRuleTableState = {
   isEditMode: boolean;

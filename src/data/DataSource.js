@@ -31,6 +31,20 @@ const dataJsons = [
               entityData: "source1_record2_param2"
             }
           ]
+        },
+        {
+          recordId: 3,
+          recordName: "source1_record3",
+          params: [
+            {
+              entityId: 1,
+              entityData: "source1_record3_param1"
+            },
+            {
+              entityId: 2,
+              entityData: "source1_record3_param2"
+            }
+          ]
         }
       ]
     },
@@ -55,7 +69,7 @@ const dataJsons = [
         },
         {
           recordId: 4,
-          recordName: "source1_record4",
+          recordName: "source2_record4",
           params: [
             {
               entityId: 6,

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Select } from "antd";
+import { Select ,Row, Col } from "antd";
 // import CRUDTable from './CRUDTable';
 import MappingRuleTableComponent from "./MappingRuleTableComponent";
 import SourceServices from '../service/SourceService'; 
@@ -15,13 +15,6 @@ type SourceSelectorProps = {
 }
 
 class SourceSelector extends Component<SourceSelectorProps> {
-    
-    constructor(props:any) {
-        super(props);
-        console.log('Constructor',sourceData);
-          
-    }
-    
     render() {
 
         const { sources, onChange } = this.props;
@@ -63,7 +56,7 @@ class RecordTypeSelector extends Component<RecordTypeSelectorProps, RecordTypeSe
 
     componentDidMount() {
         this.updateRecordTypes();
-        console.log('life',sourceData);
+        console.log('life cycle',sourceData);
         
     }
 
@@ -91,7 +84,7 @@ class RecordTypeSelector extends Component<RecordTypeSelectorProps, RecordTypeSe
     render() {
         const { recordTypes, selectedRecordType } = this.state;
 
-        return (<Select value={selectedRecordType} onChange={this.handleChange} style={{width:100}}>
+        return (<Select value={selectedRecordType} onChange={this.handleChange} style={{width:150}}>
             {recordTypes.map(recordType => {
                 return (
                     <Select.Option value={recordType} key={recordType}>
@@ -134,18 +127,20 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
 
     render() {
         const { source } = this.state;
-        console.log('sTate',this.state);
-        console.log('source',source);
-        
-        
+        let sourceList = sourceService.getAllSourceData();
         return <div>
             <br />
-            Source : <SourceSelector sources={["Source1", "Source2"]} onChange={this.handleSourceChange} />
+            <Row>
+                <Col span={2}>
+                    Source : <SourceSelector sources={sourceList} onChange={this.handleSourceChange} />
+                </Col>
+                <Col span={2}>
+                    Record type : <RecordTypeSelector source={source}/>
+                </Col>
+            </Row>
+            <br /> 
             <br />
-            Record type : <RecordTypeSelector source={source}/>
-            <br />
-            Rule 1: 
-            <br />
+            Mapping Rule Table
             <MappingRuleTableComponent />
         </div>
     }
