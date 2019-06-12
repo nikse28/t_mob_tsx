@@ -115,11 +115,13 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
         super(props);
 
         this.handleSourceChange = this.handleSourceChange.bind(this);
+        this.handleDeleteRule = this.handleDeleteRule.bind(this);
         this.handleAddRule = this.handleAddRule.bind(this);
         this.state = {
             source: ''
         }
     }
+    
     handleAddRule(e:any) {
         console.log("logged");
        this.mapTables.push({"id":2,"parameter":"log"}); 
@@ -127,6 +129,14 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
 
          });
     }
+
+    handleDeleteRule(index:any) {
+        console.log('Index',index);
+        this.mapTables.splice(index,1);
+        this.setState({
+        })
+    }
+
     handleSourceChange(source: string) {
         this.setState({ source })
     }
@@ -154,10 +164,13 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
             <br/> 
             Mapping Rule Table
             <br/>
-            { this.mapTables.map((mapTable,i)=>{
+            { this.mapTables.map((mapTable,index)=>{
                 console.log('Map table',mapTable);
                 return(
-                    <div key={i}>
+                    <div key={index}>
+
+                        <Button style={{float:"right",marginRight:10}} onClick={()=>this.handleDeleteRule(index)}>Delete Rule</Button>
+                        <br/><br/>
                         <MappingRuleTableComponent /> 
                         <br/>    
                     </div>

@@ -35,6 +35,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
     this.handleValueChange = this.handleValueChange.bind(this);
     this.handleParameterChange = this.handleParameterChange.bind(this);
     this.handleNotesChange = this.handleNotesChange.bind(this);
+    this.handleAddRow = this.handleAddRow.bind(this);
   }
   
   columns = [
@@ -143,6 +144,17 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
     }
   ];
   
+  handleAddRow() {
+    console.log('lcl');
+    this.dataSource.push({
+      key: 2,
+      parameter: " ",
+      operator: "==",
+      value: "",
+      notes:""
+    });
+    this.setState({})
+  }
   handleParameterChange(e: any) {
     this.setState({
       parameterText: e.target.value
@@ -204,6 +216,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   render() {
     return (
       <React.Fragment>
+        <button onClick={ ()=>this.handleAddRow() }>Add Row</button>
         < Table dataSource={this.dataSource} 
           columns={this.columns} 
           pagination={false}/>
