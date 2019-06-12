@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { Select ,Row, Col } from "antd";
-// import CRUDTable from './CRUDTable';
 import MappingRuleTableComponent from "./MappingRuleTableComponent";
 import SourceServices from '../service/SourceService'; 
 import sourceData from "../data/DataSource";
 
+
 const sourceService = new SourceServices();
-// export default sourceService;
+
 
 /* Features/common/SourceSelector.tsx */
 type SourceSelectorProps = {
@@ -16,7 +16,6 @@ type SourceSelectorProps = {
 
 class SourceSelector extends Component<SourceSelectorProps> {
     render() {
-
         const { sources, onChange } = this.props;
         return (<Select  onChange={onChange} style={{width:100}}>
             {sources.map(source => {
@@ -84,7 +83,7 @@ class RecordTypeSelector extends Component<RecordTypeSelectorProps, RecordTypeSe
     render() {
         const { recordTypes, selectedRecordType } = this.state;
 
-        return (<Select value={selectedRecordType} onChange={this.handleChange} style={{width:150}}>
+        return (<Select value={selectedRecordType} onChange={this.handleChange} style={{width:100}}>
             {recordTypes.map(recordType => {
                 return (
                     <Select.Option value={recordType} key={recordType}>
