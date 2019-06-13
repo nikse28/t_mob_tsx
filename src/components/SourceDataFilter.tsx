@@ -130,7 +130,7 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
          });
     }
 
-    handleDeleteRule(index:any) {
+    handleDeleteRule(index:number) {
         console.log('Index',index);
         this.mapTables.splice(index,1);
         this.setState({
