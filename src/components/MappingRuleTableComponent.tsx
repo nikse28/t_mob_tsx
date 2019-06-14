@@ -9,7 +9,7 @@ type MappingRuleTableState = {
   notesText:string;
   cancelButton:boolean;
   deleteButton:boolean;
-  editingKey:string;
+  editingKey:number;
 }
 
 type MappingRuleTableProps = {}
@@ -20,7 +20,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
     super(props);
     this.state = {
       isEditMode: true,
-      editingKey:'',
+      editingKey:-1,
       cancelButton:false,
       deleteButton:true,
       operatorText: "",
@@ -155,7 +155,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   ];
   dataSource = [
     {
-      key: '1',
+      key: 1,
       parameter: "",
       operator: "",
       value: "",
@@ -165,7 +165,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   
   handleAddRow() {
     this.dataSource.push({
-      key: '2',
+      key: 2,
       parameter: " ",
       operator: "",
       value: "",
@@ -202,7 +202,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
     })
   }
   
-  onEdit(index:string) {
+  onEdit(index:number) {
     this.dataSource.map(res => {
       if (res.key == index) {
         this.setState({
