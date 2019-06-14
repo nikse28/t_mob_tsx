@@ -31,7 +31,6 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
     this.editMode = this.editMode.bind(this);
     this.textMode = this.textMode.bind(this);
     // this.handleOnChange = this.handleOnChange.bind(this);
-    this.onDelete = this.onDelete.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.handleOperatorChange = this.handleOperatorChange.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
@@ -131,10 +130,8 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
       render: (value: any, record: any) => {
         return (
           <div>
-          
            { !this.state.cancelButton ?  <Icon type="edit" onClick={() => this.onEdit(record.key)} style={{marginRight:10}}> Edit </Icon>  :  <Icon type="close" style={{marginRight:10}} onClick={() => this.textMode('')}>Cancel</Icon> } 
            { this.state.deleteButton ?  <Icon type="delete" onClick={()=>this.handleDeleteRow(record.key)}> Delete </Icon>:  <Icon type="save" onClick={() => this.textMode(record)}>Save</Icon> }
-
           </div>
         );
       } 
@@ -151,7 +148,6 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   ];
   
   handleAddRow() {
-    console.log('lcl');
     this.dataSource.push({
       key: Math.random(),
       parameter: " ",
@@ -207,13 +203,6 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
     });
   }
   
-  onDelete() {
-    console.log("deltee");
-    // this.dataSource.pop();
-    // this.setState({
-
-    // })
-  }
   
 
   editMode() {
