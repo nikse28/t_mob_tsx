@@ -9,7 +9,7 @@ type MappingRuleTableState = {
   notesText:string;
   cancelButton:boolean;
   deleteButton:boolean;
-  editingKey:number;
+  editingKey:string;
 }
 
 type MappingRuleTableProps = {}
@@ -19,8 +19,8 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   constructor(props: any) {
     super(props);
     this.state = {
-      isEditMode: false,
-      editingKey:-1,
+      isEditMode: true,
+      editingKey:'',
       cancelButton:false,
       deleteButton:true,
       operatorText: "",
@@ -28,7 +28,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
       parameterText: "",
       notesText:"",
     };
-    this.editMode = this.editMode.bind(this);
+    // this.editMode = this.editMode.bind(this);
     this.textMode = this.textMode.bind(this);
     // this.handleOnChange = this.handleOnChange.bind(this);
     this.onEdit = this.onEdit.bind(this);
@@ -46,15 +46,19 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
       dataIndex: "parameter",
       key: "parameter",
       render: (value:any,record:any) => {
+        
         return (
           <div>
-            {this.state.isEditMode && record.key==this.state.editingKey ? (
+            {this.state.isEditMode && record.key ==this.state.editingKey ? (
               <select style={{ width: 80 }} onChange={this.handleParameterChange} defaultValue={value}>
                 <option key="1" value="Param 1">
                   Param 1
                 </option>
                 <option  key="2" value="Param 2">
                   Param 2
+                </option>
+                <option  key="3" value="Param 3">
+                  Param 3
                 </option>
               </select>
             ) : (
@@ -77,6 +81,8 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
                 <option value="==">==</option>
                 <option value="++">++</option>
                 <option value=">==">>==</option>
+                <option value="!="> != </option>
+                <option value=">"> > </option>
               </select>
             ) : (
               value
@@ -128,10 +134,20 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
       dataIndex: "operation",
       key: "operation",
       render: (value: any, record: any) => {
+        console.log('this.state.isEditMode',this.state.isEditMode);
+        console.log('record.key',record.key);
+        console.log('this.state.editingKey',this.state.editingKey);
         return (
           <div>
-           { !this.state.cancelButton ?  <Icon type="edit" onClick={() => this.onEdit(record.key)} style={{marginRight:10}}> Edit </Icon>  :  <Icon type="close" style={{marginRight:10}} onClick={() => this.textMode('')}>Cancel</Icon> } 
-           { this.state.deleteButton ?  <Icon type="delete" onClick={()=>this.handleDeleteRow(record.key)}> Delete </Icon>:  <Icon type="save" onClick={() => this.textMode(record)}>Save</Icon> }
+              {this.state.isEditMode && record.key==this.state.editingKey ?([
+                !this.state.cancelButton ?  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="close" style={{marginRight:10}} onClick={() => this.textMode('')}>Cancel</Icon>,
+                this.state.deleteButton ?  <Icon type="delete" onClick={()=>this.handleDeleteRow(record.key)}> Delete </Icon>:  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}> Edit </Icon>
+              ]):(
+                [
+                  this.state.cancelButton ?  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="edit" style={{marginRight:10}} onClick={() => this.onEdit(record.key)}>Edit</Icon>,
+                  this.state.deleteButton ?  <Icon type="delete" onClick={()=>this.handleDeleteRow(record.key)}> Delete </Icon>:  <Icon type="edit" onClick={() => this.onEdit(record.key)} style={{marginRight:10}}> Delete </Icon>
+                ]
+              )}
           </div>
         );
       } 
@@ -139,7 +155,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   ];
   dataSource = [
     {
-      key: 1,
+      key: '1',
       parameter: "",
       operator: "",
       value: "",
@@ -149,12 +165,13 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   
   handleAddRow() {
     this.dataSource.push({
-      key: Math.random(),
+      key: '2',
       parameter: " ",
       operator: "",
       value: "",
       notes:""
     });
+    
     this.setState({})
   }
   handleParameterChange(e: any) {
@@ -164,11 +181,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   }
   handleDeleteRow(index:number) {
     this.dataSource.splice(index-1,1);
-    this.setState({
-
-    });
-    console.log('This data sources',this.dataSource);
-    
+    this.setState({});
   }
 
   handleOperatorChange(e: any) {
@@ -189,8 +202,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
     })
   }
   
-  onEdit(index:number) {
-    console.log(index);
+  onEdit(index:string) {
     this.dataSource.map(res => {
       if (res.key == index) {
         this.setState({
@@ -205,11 +217,11 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   
   
 
-  editMode() {
-    this.setState({
-      isEditMode: true
-    });
-  }
+  // editMode() {
+  //   this.setState({
+  //     isEditMode: true
+  //   });
+  // }
 
   /*
     Handling the text mode 

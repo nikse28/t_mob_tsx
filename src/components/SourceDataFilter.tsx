@@ -55,7 +55,7 @@ class RecordTypeSelector extends Component<RecordTypeSelectorProps, RecordTypeSe
 
     componentDidMount() {
         this.updateRecordTypes();
-        console.log('life cycle',sourceData);
+        // console.log('life cycle',sourceData);
         
     }
 
@@ -165,7 +165,6 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
             Mapping Rule Table
             <br/>
             { this.mapTables.map((mapTable,index)=>{
-                console.log('Map table',mapTable);
                 return(
                     <div key={index}>
 

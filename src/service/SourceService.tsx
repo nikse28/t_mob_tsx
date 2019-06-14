@@ -11,14 +11,11 @@ class SourceService {
     }
 
     getRecordTypes(source: string): Array<string> {
-        console.log('Service...',source);
-        console.log('Data?',sourceData);
         
         if (source === 'Source1') {    
            const recordList:Array<string> = [];
             {
                 sourceData.map(res=>{
-                console.log('Records',res.records);
                 if(res.records.length>0) {
                     res.records.map(record=>{
                         if(res.name=='Source1') {
@@ -34,7 +31,6 @@ class SourceService {
             const recordList:Array<string> = [];
             {
                 sourceData.map(res=>{
-                console.log('Records',res.records);
                 if(res.records.length>0) {
                     res.records.map(record=>{
                         if(res.name=='Source2') {
