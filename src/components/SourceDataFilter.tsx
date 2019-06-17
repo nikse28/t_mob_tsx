@@ -17,7 +17,7 @@ type SourceSelectorProps = {
 class SourceSelector extends Component<SourceSelectorProps> {
     render() {
         const { sources, onChange } = this.props;
-        return (<Select  onChange={onChange} style={{width:100}}>
+        return (<Select  onChange={onChange} style={{width:150}}>
             {sources.map(source => {
                 return (
                     <Select.Option value={source} key={source}>
@@ -83,7 +83,7 @@ class RecordTypeSelector extends Component<RecordTypeSelectorProps, RecordTypeSe
     render() {
         const { recordTypes, selectedRecordType } = this.state;
 
-        return (<Select value={selectedRecordType} onChange={this.handleChange} style={{width:100}}>
+        return (<Select value={selectedRecordType} onChange={this.handleChange} style={{width:150}}>
             {recordTypes.map(recordType => {
                 return (
                     <Select.Option value={recordType} key={recordType}>
@@ -123,10 +123,8 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
     }
     
     handleAddRule(e:any) {
-        console.log("logged");
-       this.mapTables.push({"id":2,"parameter":"log"}); 
-       this.setState({ 
-
+       this.mapTables.push({"id":2,"parameter":"log"});
+       this.setState({      
          });
     }
 
@@ -148,10 +146,10 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
         return <div>
             <br />
             <Row>
-                <Col span={2}>
+                <Col span={4}>
                     Source : <SourceSelector sources={sourceList} onChange={this.handleSourceChange} />
                 </Col>
-                <Col span={2}>
+                <Col span={6}>
                     Record type : <RecordTypeSelector source={source}/>
                 </Col>
             </Row>

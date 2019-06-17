@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Icon ,Button } from "antd";
+import { Table, Icon ,Button , Input, Select } from "antd";
 
 type MappingRuleTableState = {
   isEditMode: boolean;
@@ -16,11 +16,12 @@ type MappingRuleTableProps = {}
 
 
 export default class MappingRuleTableComponent extends Component<MappingRuleTableProps, MappingRuleTableState> {
+  public updateIndex:number = 1;
   constructor(props: any) {
     super(props);
     this.state = {
       isEditMode: true,
-      editingKey:-1,
+      editingKey:1,
       cancelButton:false,
       deleteButton:true,
       operatorText: "",
@@ -46,7 +47,6 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
       dataIndex: "parameter",
       key: "parameter",
       render: (value:any,record:any) => {
-        
         return (
           <div>
             {this.state.isEditMode && record.key ==this.state.editingKey ? (
@@ -63,7 +63,6 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
               </select>
             ) : (
               value
-              // this.state.parameterText
             )}
           </div>
         );
@@ -99,7 +98,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
         return (
           <div>
             {this.state.isEditMode && record.key==this.state.editingKey ? (
-              <input
+              <Input
                 onChange={this.handleValueChange}
                 defaultValue={value}
               />
@@ -118,7 +117,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
         return (
           <div>
             {this.state.isEditMode && record.key==this.state.editingKey ? (
-              <input
+              <Input
                 onChange={this.handleNotesChange}
                 defaultValue={value}
               />
@@ -134,9 +133,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
       dataIndex: "operation",
       key: "operation",
       render: (value: any, record: any) => {
-        console.log('this.state.isEditMode',this.state.isEditMode);
-        console.log('record.key',record.key);
-        console.log('this.state.editingKey',this.state.editingKey);
+        console.log('record',record);
         return (
           <div>
               {this.state.isEditMode && record.key==this.state.editingKey ?([
@@ -155,7 +152,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   ];
   dataSource = [
     {
-      key: 1,
+      key: this.updateIndex,
       parameter: "",
       operator: "",
       value: "",
@@ -164,22 +161,31 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   ];
   
   handleAddRow() {
+    console.log('first',this.updateIndex);
+    this.updateIndex++;
     this.dataSource.push({
-      key: 2,
-      parameter: " ",
+      key: this.updateIndex,
+      parameter: "",
       operator: "",
       value: "",
       notes:""
     });
-    
-    this.setState({})
+    this.setState({
+      editingKey:this.updateIndex,
+      isEditMode: true,
+      deleteButton:true,
+    })
+    console.log('last',this.updateIndex++);
   }
+
   handleParameterChange(e: any) {
     this.setState({
       parameterText: e.target.value
     });
   }
+
   handleDeleteRow(index:number) {
+    console.log('deleting index',index);
     this.dataSource.splice(index-1,1);
     this.setState({});
   }
@@ -214,22 +220,16 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
       }
     });
   }
-  
-  
-
-  // editMode() {
-  //   this.setState({
-  //     isEditMode: true
-  //   });
-  // }
 
   /*
     Handling the text mode 
    */
 
   textMode(item:any) {
-    this.dataSource.map(record=>{
-      if(record.key==item.key){
+    console.log('Text mode',item);
+    
+    this.dataSource.map(record=> {
+      if(record.key==item.key) {
         record.notes=this.state.notesText;
         record.operator=this.state.operatorText;
         record.parameter=this.state.parameterText;
