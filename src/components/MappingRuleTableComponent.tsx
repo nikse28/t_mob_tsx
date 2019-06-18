@@ -12,13 +12,20 @@ type MappingRuleTableState = {
   editingKey:number;
 }
 
-type MappingRuleTableProps = {}
+type MappingRuleTableProps = {
+  source:string;
+  textMode?:()=>void;
+  saveModes?:any;
+  deleteMode?: any;
+  
+}
 
 
 export default class MappingRuleTableComponent extends Component<MappingRuleTableProps, MappingRuleTableState> {
   public updateIndex:number = 1;
   constructor(props: any) {
     super(props);
+    console.log('getting started with', props);
     this.state = {
       isEditMode: true,
       editingKey:1,
@@ -39,8 +46,24 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
     this.handleNotesChange = this.handleNotesChange.bind(this);
     this.handleAddRow = this.handleAddRow.bind(this);
     this.handleDeleteRow = this.handleDeleteRow.bind(this);
+    this.deleteMode =  this.deleteMode.bind(this);
+
   }
   
+  deleteMode(r: any){
+    console.log(this.props);
+    this.props.deleteMode(r,this.dataSource);
+  }
+
+  saveModes(r:any) {
+    console.log('save ...',r);
+    let rs = {key: 1, parameter: '', operator: "", value: "", notes: ""}
+    console.log('$$$',rs);
+    
+    this.props.saveModes(rs);
+  }
+
+
   columns = [
     {
       title: "Parameter",
@@ -134,18 +157,31 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
       key: "operation",
       render: (value: any, record: any) => {
         console.log('record',record);
+        
         return (
-          <div>
+          // <div>
+          //     {this.state.isEditMode && record.key==this.state.editingKey ?([
+          //       !this.state.cancelButton ?  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="close" style={{marginRight:10}} onClick={this.props.textMode}>Cancel</Icon>,
+          //       this.state.deleteButton ?  <Icon type="delete" onClick={()=>this.handleDeleteRow(record.key)}> Delete </Icon>:  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}> Edit </Icon>
+          //     ]):(
+          //       [
+          //         this.state.cancelButton ?  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="edit" style={{marginRight:10}} onClick={() => this.onEdit(record.key)}>Edit</Icon>,
+          //         this.state.deleteButton ?  <Icon type="delete" onClick={()=>this.handleDeleteRow(record.key)}> Delete </Icon>:  <Icon type="edit" onClick={() => this.onEdit(record.key)} style={{marginRight:10}}> Delete </Icon>
+          //       ]
+          //     )}
+          // </div>
+          <React.Fragment>
+            
               {this.state.isEditMode && record.key==this.state.editingKey ?([
-                !this.state.cancelButton ?  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="close" style={{marginRight:10}} onClick={() => this.textMode('')}>Cancel</Icon>,
-                this.state.deleteButton ?  <Icon type="delete" onClick={()=>this.handleDeleteRow(record.key)}> Delete </Icon>:  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}> Edit </Icon>
+                !this.state.cancelButton ?  <Icon type="save" onClick={()=>this.props.saveModes(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="close" style={{marginRight:10}} onClick={this.props.textMode}>Cancel</Icon>,
+                this.state.deleteButton ?  <Icon type="delete" onClick={() => this.props.deleteMode(record,this.dataSource)}> Delete </Icon>:  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}> Edit </Icon>
               ]):(
                 [
                   this.state.cancelButton ?  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="edit" style={{marginRight:10}} onClick={() => this.onEdit(record.key)}>Edit</Icon>,
                   this.state.deleteButton ?  <Icon type="delete" onClick={()=>this.handleDeleteRow(record.key)}> Delete </Icon>:  <Icon type="edit" onClick={() => this.onEdit(record.key)} style={{marginRight:10}}> Delete </Icon>
                 ]
               )}
-          </div>
+          </React.Fragment>
         );
       } 
     }

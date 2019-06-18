@@ -71,6 +71,7 @@ class RecordTypeSelector extends Component<RecordTypeSelectorProps, RecordTypeSe
     }
 
     handleChange(selectedRecordType: string) {
+        console.log('selectedRecordType',selectedRecordType);
         this.setState({ selectedRecordType });
     }
 
@@ -103,22 +104,24 @@ class RecordTypeSelector extends Component<RecordTypeSelectorProps, RecordTypeSe
 /* Features/common/SourceDataFilter.tsx */
 type SourceDataFilterProps = {
 
+    
 }
 
 type SourceDataFilterState = {
-    source: string
+    source: string,
+    
 }
 
 class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilterState> {
     mapTables:Array<object> = [{"id":1,"parameter":"log"}];
     constructor(props: SourceDataFilterProps) {
         super(props);
-
         this.handleSourceChange = this.handleSourceChange.bind(this);
         this.handleDeleteRule = this.handleDeleteRule.bind(this);
         this.handleAddRule = this.handleAddRule.bind(this);
+
         this.state = {
-            source: ''
+            source: '',
         }
     }
     
@@ -135,14 +138,34 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
         })
     }
 
+    setTextMode() {
+        alert('works');
+    }
+
+    setSaveMode(rec:any) {
+        console.log('Record word',rec);
+        
+    }
+
+    setDeleteMode(rec: any,datasource:any) {
+        console.log('del', rec);
+        console.log('data so',datasource);
+        datasource.map((data:any)=>{
+            if(data.key==rec.key) {
+                datasource.splice(data,1);
+            }    
+        })
+        this.setState({});
+    }
+
     handleSourceChange(source: string) {
+        console.log('source value',source);
         this.setState({ source })
     }
 
     render() {
         const { source } = this.state;
         let sourceList = sourceService.getAllSourceData();
-        
         return <div>
             <br />
             <Row>
@@ -165,10 +188,14 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
             { this.mapTables.map((mapTable,index)=>{
                 return(
                     <div key={index}>
-
                         <Button style={{float:"right",marginRight:10}} onClick={()=>this.handleDeleteRule(index)}>Delete Rule</Button>
                         <br/><br/>
-                        <MappingRuleTableComponent /> 
+                        <MappingRuleTableComponent 
+                        source={source} 
+                        textMode={this.setTextMode.bind(this)}
+                        saveModes={this.setSaveMode.bind(this)}
+                        deleteMode={this.setDeleteMode.bind(this)}
+                        /> 
                         <br/>    
                     </div>
                 )
