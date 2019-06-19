@@ -108,12 +108,13 @@ type SourceDataFilterProps = {
 }
 
 type SourceDataFilterState = {
-    source: string,
-    
-}
+    source: string,   
+    tableRecord:any;
+}   
 
 class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilterState> {
     mapTables:Array<object> = [{"id":1,"parameter":"log"}];
+    
     constructor(props: SourceDataFilterProps) {
         super(props);
         this.handleSourceChange = this.handleSourceChange.bind(this);
@@ -122,6 +123,7 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
 
         this.state = {
             source: '',
+            tableRecord:[]
         }
     }
     
@@ -142,16 +144,21 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
         alert('works');
     }
 
-    setSaveMode(rec:any) {
-        console.log('Record word',rec);
+    setSaveMode(records:any) {
+        let record = records;
+        this.state.tableRecord.push(record);
+        console.log('this.state.tableRecord',this.state.tableRecord);
+    }
+    setEditMode(index:number) {
+        console.log('getting Edit mode',index);
+        console.log('Record?',this.state.tableRecord);
         
+            
     }
 
-    setDeleteMode(rec: any,datasource:any) {
-        console.log('del', rec);
-        console.log('data so',datasource);
+    setDeleteMode(record: any,datasource:any) {
         datasource.map((data:any)=>{
-            if(data.key==rec.key) {
+            if(data.key==record.key) {
                 datasource.splice(data,1);
             }    
         })
@@ -195,6 +202,7 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
                         textMode={this.setTextMode.bind(this)}
                         saveModes={this.setSaveMode.bind(this)}
                         deleteMode={this.setDeleteMode.bind(this)}
+                        onEditMode={this.setEditMode.bind(this)}
                         /> 
                         <br/>    
                     </div>

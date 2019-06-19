@@ -17,7 +17,7 @@ type MappingRuleTableProps = {
   textMode?:()=>void;
   saveModes?:any;
   deleteMode?: any;
-  
+  onEditMode?:any;
 }
 
 
@@ -50,17 +50,49 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
 
   }
   
-  deleteMode(r: any){
+  deleteMode(record: any){
     console.log(this.props);
-    this.props.deleteMode(r,this.dataSource);
+    this.props.deleteMode(record,this.dataSource);
+  }
+  onEditMode(index:any) {
+    console.log('inD',index);
+    this.props.onEditMode(index);
+    this.dataSource.map(data=> {
+      console.log('Data',data);
+    })
+
+    this.dataSource.map(res => {
+      if (res.key == index) {
+        this.setState({
+          editingKey:index,
+          isEditMode: true,
+          cancelButton:true,
+          deleteButton:false,
+        });
+      }
+    });
+
   }
 
-  saveModes(r:any) {
-    console.log('save ...',r);
-    let rs = {key: 1, parameter: '', operator: "", value: "", notes: ""}
-    console.log('$$$',rs);
-    
+  saveModes(item:any) {
+    console.log('save ...',item);
+    let rs = {key: item.key, parameter: this.state.parameterText, operator:this.state.operatorText , value: this.state.valueText, notes: this.state.notesText}
     this.props.saveModes(rs);
+    this.dataSource.map(record=> {
+      if(record.key==item.key) {
+        record.notes=this.state.notesText;
+        record.operator=this.state.operatorText;
+        record.parameter=this.state.parameterText;
+        record.value=this.state.valueText;
+      }
+    });
+    this.setState({
+      isEditMode: false,
+      cancelButton:false,
+      deleteButton:true
+    },()=>{
+      this.clearFields();
+    });
   }
 
 
@@ -173,11 +205,11 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
           <React.Fragment>
             
               {this.state.isEditMode && record.key==this.state.editingKey ?([
-                !this.state.cancelButton ?  <Icon type="save" onClick={()=>this.props.saveModes(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="close" style={{marginRight:10}} onClick={this.props.textMode}>Cancel</Icon>,
+                !this.state.cancelButton ?  <Icon type="save" onClick={()=>this.saveModes(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="close" style={{marginRight:10}} onClick={this.textMode}>Cancel</Icon>,
                 this.state.deleteButton ?  <Icon type="delete" onClick={() => this.props.deleteMode(record,this.dataSource)}> Delete </Icon>:  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}> Edit </Icon>
               ]):(
                 [
-                  this.state.cancelButton ?  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="edit" style={{marginRight:10}} onClick={() => this.onEdit(record.key)}>Edit</Icon>,
+                  this.state.cancelButton ?  <Icon type="save" onClick={() => this.textMode(record)} style={{marginRight:10}}>Save </Icon>  :  <Icon type="edit" style={{marginRight:10}} onClick={() => this.onEditMode(record.key)}>Edit</Icon>,
                   this.state.deleteButton ?  <Icon type="delete" onClick={()=>this.handleDeleteRow(record.key)}> Delete </Icon>:  <Icon type="edit" onClick={() => this.onEdit(record.key)} style={{marginRight:10}}> Delete </Icon>
                 ]
               )}
