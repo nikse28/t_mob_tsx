@@ -129,14 +129,16 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
     
     handleAddRule(e:any) {
        this.mapTables.push({"id":2,"parameter":"log"});
-       this.setState({      
-         });
+       this.setState({ 
+           source:""     
+        });
     }
 
     handleDeleteRule(index:number) {
         console.log('Index',index);
         this.mapTables.splice(index,1);
         this.setState({
+            source:''
         })
     }
 
@@ -152,8 +154,6 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
     setEditMode(index:number) {
         console.log('getting Edit mode',index);
         console.log('Record?',this.state.tableRecord);
-        
-            
     }
 
     setDeleteMode(record: any,datasource:any) {
@@ -162,7 +162,9 @@ class SourceDataFilter extends Component<SourceDataFilterProps, SourceDataFilter
                 datasource.splice(data,1);
             }    
         })
-        this.setState({});
+        this.setState({
+            source:""
+        });
     }
 
     handleSourceChange(source: string) {

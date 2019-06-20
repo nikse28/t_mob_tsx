@@ -25,7 +25,6 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   public updateIndex:number = 1;
   constructor(props: any) {
     super(props);
-    console.log('getting started with', props);
     this.state = {
       isEditMode: true,
       editingKey:1,
@@ -55,12 +54,7 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
     this.props.deleteMode(record,this.dataSource);
   }
   onEditMode(index:any) {
-    console.log('inD',index);
     this.props.onEditMode(index);
-    this.dataSource.map(data=> {
-      console.log('Data',data);
-    })
-
     this.dataSource.map(res => {
       if (res.key == index) {
         this.setState({
@@ -71,11 +65,9 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
         });
       }
     });
-
   }
 
   saveModes(item:any) {
-    console.log('save ...',item);
     let rs = {key: item.key, parameter: this.state.parameterText, operator:this.state.operatorText , value: this.state.valueText, notes: this.state.notesText}
     this.props.saveModes(rs);
     this.dataSource.map(record=> {
@@ -255,7 +247,16 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
   handleDeleteRow(index:number) {
     console.log('deleting index',index);
     this.dataSource.splice(index-1,1);
-    this.setState({});
+    this.setState({
+      isEditMode: false,
+      editingKey:-1,
+      cancelButton:false,
+      deleteButton:true,
+      operatorText: "",
+      valueText: "",
+      parameterText: "",
+      notesText:"",
+    });
   }
 
   handleOperatorChange(e: any) {
