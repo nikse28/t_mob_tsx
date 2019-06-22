@@ -319,10 +319,10 @@ export default class MappingRuleTableComponent extends Component<MappingRuleTabl
    */
   clearFields=()=>{
     this.setState({
-      notesText:"",
-      operatorText:"",
-      parameterText:"",
-      valueText:"",
+      // notesText:"",
+      // operatorText:"",
+      // parameterText:"",
+      // valueText:"",
     })
   }
 
